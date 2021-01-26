@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h3.my-3 イベントの編集
+  form(method="post", action=`/schedules/${schedule.scheduleId}?edit=1`)
+    input(type="hidden" name="_csrf" value!=csrfToken)
+    div.form-group
+      label(for="scheduleName") イベント名
+      input(type="text" name="scheduleName" value=schedule.scheduleName)#scheduleName.form-control
+    div.form-group
+      label(for="memo") メモ
+      textarea(name="memo")#memo.form-control #{schedule.memo}
+    div.form-group
+      label(for="day") 曜日
+      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日'] 
+      - var day = schedule.day
+      p 現在：#{dayName[day]}
+      div.form-check
+        input(type="radio" name="day" value="0")#monday.form-check-input
+        label(for="monday").form-check-label 月曜日
+      div.form-check
+        input(type="radio" name="day" value="1")#tuesday.form-check-input
+        label(for="tuesday").form-check-label 火曜日
+      div.form-check
+        input(type="radio" name="day" value="2")#wednesday.form-check-input
+        label(for="wednesday").form-check-label 水曜日
+      div.form-check
+        input(type="radio" name="day" value="3")#thursday.form-check-input
+        label(for="thursday").form-check-label 木曜日
+      div.form-check
+        input(type="radio" name="day" value="4")#friday.form-check-input
+        label(for="friday").form-check-label 金曜日
+    div
+      button(type="submit").btn.btn-info 以上の内容でイベントを編集する
+  h3.my-3 危険な変更
+  form(method="post", action=`/schedules/${schedule.scheduleId}?delete=1`)
+    input(type="hidden" name="_csrf" value!=csrfToken)
+    div.form-check
+      input(type='checkbox' value='checked' required='required' )#deleteCheck
+      label(for='deleteCheck').my-2 本当に削除する場合はこちらをクリックしてください。
+    button(type="submit").btn.btn-danger このイベントを削除する

@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  div.card.my-3
+    div.card-header
+      h4 #{schedule.scheduleName}
+    div.card-body
+      p(style="white-space:pre;") #{schedule.memo}
+    div.card-footer
+      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日'] 
+      - var day = schedule.day
+      p #{dayName[day]}
+  div.form-group
+    label(for="shareURL") 共有用 URL:
+    - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
+    input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
+  - var isMine = parseInt(user.id) === schedule.user.userId
+  if isMine
+    div
+      a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info このイベントを編集する
+  each user in users
+    - var availability = availabilityMap.get(user.userId);
+    - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+    - var buttonStyles = ['btn-primary', 'btn-danger'];
+    //- if user.isSelf
+    //- p #{user.mailAddress}
+    button(class=`availability-toggle-button btn-lg ${buttonStyles[availability]}`
+      data-schedule-id=schedule.scheduleId
+      data-user-id=user.userId
+      data-availability=availability).my-3 #{availabilityLabels[availability]}
+  //- div
+  //-   a(href="/").btn.btn-info.my-3 トップページへ
+
+
+//- - var isAvailable = availability === 0;
+
+//- p #{user.mailAddress}

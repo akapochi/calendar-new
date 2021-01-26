@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  div.jumbotron.my-3
+    h1.display-4 イベント管理くん
+    p.lead イベント管理くんは、GitHubで認証でき、イベントの作成・申し込みができるサービスです
+  if user
+    div
+      a(href="/schedules/new").btn.btn-info イベントを作る
+    - var hasSchedule = schedules.length > 0
+    if hasSchedule
+      h3.my-3 イベント一覧
+      table.table
+        tr
+          th イベント名
+          th 曜日
+        each schedule in schedules
+          - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日'] 
+          - var day = schedule.day
+          tr
+            td
+              a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}
+            td #{dayName[day]}
