@@ -2,11 +2,13 @@
 const request = require('supertest');
 const app = require('../app');
 const passportStub = require('passport-stub');
+const User = require('../models/user');
+const Schedule = require('../models/schedule');
 
 describe('/login', () => {
   beforeAll(() => {
     passportStub.install(app);
-    passportStub.login({ username: 'testuser' });
+    passportStub.login({ username: 'testuser', mailAddress: 'hoge@gmail.com' });
   });
 
   afterAll(() => {
@@ -28,21 +30,21 @@ describe('/login', () => {
       .expect(/testuser/)
       .expect(200);
   });
+});
 
-  describe('/logout', () => {
-    test('/ にリダイレクトされる', () => {
-      return request(app)
-        .get('/logout')
-        .expect('Location', '/')
-        .expect(302);
-    });
+describe('/logout', () => {
+  test('/ にリダイレクトされる', () => {
+    return request(app)
+      .get('/logout')
+      .expect('Location', '/')
+      .expect(302);
   });
 });
 
 describe('/schedules', () => {
   beforeAll(() => {
     passportStub.install(app);
-    passportStub.login({ id: 0, username: 'testuser' });
+    passportStub.login({ id: 0, username: 'testuser', mailAddress: 'hoge@gmail.com' });
   });
 
   afterAll(() => {
@@ -51,13 +53,12 @@ describe('/schedules', () => {
   });
 
   test('予定が作成でき、表示される', done => {
-    User.upsert({ userId: 0, username: 'testuser' }).then(() => {
+    User.upsert({ userId: 0, username: 'testuser', mailAddress: 'hoge@gmail.com' }).then(() => {
       request(app)
         .post('/schedules')
         .send({
           scheduleName: 'テスト予定1',
           memo: 'テストメモ1\r\nテストメモ2',
-          candidates: 'テスト候補1\r\nテスト候補2\r\nテスト候補3'
         })
         .expect('Location', /schedules/)
         .expect(302)
@@ -68,27 +69,15 @@ describe('/schedules', () => {
             .expect(/テスト予定1/)
             .expect(/テストメモ1/)
             .expect(/テストメモ2/)
-            .expect(/テスト候補1/)
-            .expect(/テスト候補2/)
-            .expect(/テスト候補3/)
             .expect(200)
             .end((err, res) => {
               if (err) return done(err);
               // テストで作成したデータを削除
               const scheduleId = createdSchedulePath.split('/schedules/')[1];
-              Candidate.findAll({
-                where: { scheduleId: scheduleId }
-              }).then(candidates => {
-                const promises = candidates.map(c => {
-                  return c.destroy();
-                });
-                Promise.all(promises).then(() => {
-                  Schedule.findByPk(scheduleId).then(s => {
-                    s.destroy().then(() => {
-                      if (err) return done(err);
-                      done();
-                    });
-                  });
+              Schedule.findByPk(scheduleId).then(s => {
+                s.destroy().then(() => {
+                  if (err) return done(err);
+                  done();
                 });
               });
             });
