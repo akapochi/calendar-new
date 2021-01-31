@@ -25,7 +25,7 @@ User.sync().then(() => {
 //GitHub認証
 var GitHubStrategy = require('passport-github2').Strategy;
 
-var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || 'a54100f8731ba88224f8';
+var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 passport.serializeUser(function (user, done) {
