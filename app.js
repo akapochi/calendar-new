@@ -22,6 +22,7 @@ User.sync().then(() => {
   });
 });
 
+//GitHub認証
 var GitHubStrategy = require('passport-github2').Strategy;
 
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || 'a54100f8731ba88224f8';
@@ -42,7 +43,7 @@ passport.use(new GitHubStrategy({
 },
   function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      // console.log(profile);
+      // console.log(`profileは${profile}です。`);
       User.upsert({
         userId: profile.id,
         username: profile.username,
@@ -54,10 +55,44 @@ passport.use(new GitHubStrategy({
   }
 ));
 
+//Google認証
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, obj);
+});
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.HEROKU_URL ? process.env.HEROKU_URL + 'auth/google/callback' : 'http://localhost:8000/auth/google/callback'
+},
+  function (accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      // console.log(`profileは${profile}です。`);
+      // console.log(`メアドは${profile.emails[0].value}です。`);
+      // console.log(`usernameは${profile.displayName}です。`);
+      User.upsert({
+        userId: profile.id,
+        username: profile.displayName,
+        mailAddress: profile.emails[0].value
+      }).then(() => {
+        done(null, profile);
+      });
+    });
+  }
+));
+
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
-var schedulesRouter = require('./routes/schedules');
+var schedulesRouter = require('./routes/schedules').router;
 var availabilitiesRouter = require('./routes/availabilities');
 
 var app = express();
@@ -90,6 +125,31 @@ app.get('/auth/github',
 
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
+  function (req, res) {
+    var loginFrom = req.cookies.loginFrom;
+    // オープンリダイレクタ脆弱性対策
+    if (loginFrom &&
+      !loginFrom.includes('http://') &&
+      !loginFrom.includes('https://')) {
+      res.clearCookie('loginFrom');
+      res.redirect(loginFrom);
+    } else {
+      res.redirect('/');
+    }
+  });
+
+app.get('/auth/google',
+  passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  }),
+  function (req, res) {
+  });
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
     var loginFrom = req.cookies.loginFrom;
     // オープンリダイレクタ脆弱性対策
