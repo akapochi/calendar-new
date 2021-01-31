@@ -11,7 +11,7 @@ const Availability = loader.database.define(
       allowNull: false
     },
     userId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DECIMAL,
       primaryKey: true,
       allowNull: false
     },
