@@ -100,7 +100,6 @@ __webpack_require__.r(__webpack_exports__);
 var global = Function('return this;')();
 global.jQuery = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
  // 出欠をAJAXで更新
-// $('.availability-toggle-button').each((i, e) => {
 
 var button = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.availability-toggle-button');
 button.on("click", function () {
@@ -118,7 +117,7 @@ button.on("click", function () {
     button.removeClass('btn-primary btn-danger');
     button.addClass(buttonStyles[data.availability]);
   });
-}); // });
+});
 
 /***/ }),
 /* 1 */

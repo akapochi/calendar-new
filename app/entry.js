@@ -5,8 +5,6 @@ global.jQuery = $;
 import bootstrap from 'bootstrap';
 
 // 出欠をAJAXで更新
-
-// $('.availability-toggle-button').each((i, e) => {
 const button = $('.availability-toggle-button');
 button.on("click", () => {
   const scheduleId = button.data('schedule-id');
@@ -28,4 +26,3 @@ button.on("click", () => {
     }
   );
 });
-// });

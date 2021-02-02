@@ -82,17 +82,11 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           availabilityMap.set(u.userId, availability);
         });
 
-        // console.log(availabilityMap);
-        // console.log(availabilityMap.get(req.user.id));
-        // console.log(req.user);
-        // console.log(`req.userは${req.user}です`);
-        // console.log(`req.user.userIDは${req.user.id}です`);
-
         let myAvailability = availabilityMap.get(parseInt(req.user.id));
 
         res.render('schedule', {
           user: req.user,
-          userId: req.user.id,
+          userId: parseInt(req.user.id),
           schedule: schedule,
           users: users,
           myAvailability: myAvailability,
