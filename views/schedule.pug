@@ -18,20 +18,17 @@ block content
   if isMine
     div
       a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info このイベントを編集する
-  each user in users
-    - var availability = availabilityMap.get(user.userId);
-    - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
-    - var buttonStyles = ['btn-primary', 'btn-danger'];
-    //- if user.isSelf
-    //- p #{user.mailAddress}
-    button(class=`availability-toggle-button btn-lg ${buttonStyles[availability]}`
-      data-schedule-id=schedule.scheduleId
-      data-user-id=user.userId
-      data-availability=availability).my-3 #{availabilityLabels[availability]}
+
+  - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+  - var buttonStyles = ['btn-primary', 'btn-danger'];
+  //- if user.isSelf
+  //- p #{user.mailAddress}
+  button(class=`availability-toggle-button btn-lg ${buttonStyles[myAvailability]}`
+    data-schedule-id=schedule.scheduleId
+    data-user-id=userId
+    data-availability=myAvailability).my-3 #{availabilityLabels[myAvailability]}
   //- div
   //-   a(href="/").btn.btn-info.my-3 トップページへ
 
 
-//- - var isAvailable = availability === 0;
-
-//- p #{user.mailAddress}
+//- - var isAvailable = myAvailability === 0;

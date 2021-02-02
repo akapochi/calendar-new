@@ -99,26 +99,26 @@ __webpack_require__.r(__webpack_exports__);
 
 var global = Function('return this;')();
 global.jQuery = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
+ // 出欠をAJAXで更新
+// $('.availability-toggle-button').each((i, e) => {
 
-jquery__WEBPACK_IMPORTED_MODULE_0___default()('.availability-toggle-button').each(function (i, e) {
-  var button = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e);
-  button.click(function () {
-    var scheduleId = button.data('schedule-id');
-    var userId = button.data('user-id');
-    var availability = parseInt(button.data('availability'));
-    var nextAvailability = (availability + 1) % 2;
-    jquery__WEBPACK_IMPORTED_MODULE_0___default.a.post("/schedules/".concat(scheduleId, "/users/").concat(userId), {
-      availability: nextAvailability
-    }, function (data) {
-      button.data('availability', data.availability);
-      var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
-      button.text(availabilityLabels[data.availability]);
-      var buttonStyles = ['btn-primary', 'btn-danger'];
-      button.removeClass('btn-primary btn-danger');
-      button.addClass(buttonStyles[data.availability]);
-    });
+var button = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.availability-toggle-button');
+button.on("click", function () {
+  var scheduleId = button.data('schedule-id');
+  var userId = button.data('user-id');
+  var availability = parseInt(button.data('availability'));
+  var nextAvailability = (availability + 1) % 2;
+  jquery__WEBPACK_IMPORTED_MODULE_0___default.a.post("/schedules/".concat(scheduleId, "/users/").concat(userId), {
+    availability: nextAvailability
+  }, function (data) {
+    button.data('availability', data.availability);
+    var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+    button.text(availabilityLabels[data.availability]);
+    var buttonStyles = ['btn-primary', 'btn-danger'];
+    button.removeClass('btn-primary btn-danger');
+    button.addClass(buttonStyles[data.availability]);
   });
-});
+}); // });
 
 /***/ }),
 /* 1 */
