@@ -107,7 +107,7 @@ button.on("click", function () {
   var userId = button.data('user-id');
   var availability = parseInt(button.data('availability'));
   var nextAvailability = (availability + 1) % 2;
-  var message = ['申し込み', 'キャンセルし'];
+  var message = ['このイベントに申し込み', '申し込みを取り消し'];
 
   if (confirm("".concat(message[availability], "\u307E\u3059\u304B\uFF1F"))) {
     jquery__WEBPACK_IMPORTED_MODULE_0___default.a.post("/schedules/".concat(scheduleId, "/users/").concat(userId), {

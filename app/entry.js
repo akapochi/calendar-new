@@ -11,7 +11,7 @@ button.on("click", () => {
   const userId = button.data('user-id');
   const availability = parseInt(button.data('availability'));
   const nextAvailability = (availability + 1) % 2;
-  const message = ['申し込み', 'キャンセルし']
+  const message = ['このイベントに申し込み', '申し込みを取り消し']
 
   if (confirm(`${message[availability]}ますか？`)) {
     $.post(
