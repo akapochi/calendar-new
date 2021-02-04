@@ -12,7 +12,7 @@ block content
       textarea(name="memo")#memo.form-control #{schedule.memo}
     div.form-group
       label(for="day") 曜日
-      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日'] 
+      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日', 'その他'] 
       - var day = schedule.day
       p 現在：#{dayName[day]}
       div.form-check
