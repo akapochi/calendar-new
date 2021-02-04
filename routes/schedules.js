@@ -60,15 +60,15 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
 
         // 閲覧ユーザーと出欠に紐づくユーザーからユーザー Map (キー:ユーザー ID, 値:ユーザー) を作る
         const userMap = new Map(); // key: userId, value: User
-        userMap.set(BigInt(req.user.id), {
+        userMap.set(req.user.id, {
           isSelf: true,
-          userId: BigInt(req.user.id),
+          userId: req.user.id,
           username: req.user.username
           // mailAddress: a.user.mailAddress
         });
         availabilities.forEach((a) => {
           userMap.set(a.user.userId, {
-            isSelf: BigInt(req.user.id) === a.user.userId, // 閲覧ユーザー自身であるかを含める
+            isSelf: req.user.id === a.user.userId, // 閲覧ユーザー自身であるかを含める
             userId: a.user.userId,
             username: a.user.username,
             mailAddress: a.user.mailAddress
@@ -86,11 +86,11 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
         console.log(parseInt(req.user.id));
         console.log(BigInt(req.user.id));
 
-        let myAvailability = availabilityMap.get(BigInt(req.user.id));
+        let myAvailability = availabilityMap.get(req.user.id);
 
         res.render('schedule', {
           user: req.user,
-          userId: BigInt(req.user.id),
+          userId: req.user.id,
           schedule: schedule,
           users: users,
           myAvailability: myAvailability,
@@ -125,7 +125,7 @@ router.get('/:scheduleId/edit', authenticationEnsurer, csrfProtection, (req, res
 });
 
 function isMine(req, schedule) {
-  return schedule && BigInt(schedule.createdBy) === BigInt(req.user.id);
+  return schedule && schedule.createdBy === req.user.id;
 }
 
 router.post('/:scheduleId', authenticationEnsurer, csrfProtection, (req, res, next) => {
