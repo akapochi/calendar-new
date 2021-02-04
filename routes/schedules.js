@@ -82,9 +82,9 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           availabilityMap.set(u.userId, availability);
         });
 
-        console.log(req.user);
-        console.log(parseInt(req.user.id));
-        console.log(BigInt(req.user.id));
+        // console.log(req.user);
+        // console.log(parseInt(req.user.id));
+        // console.log(BigInt(req.user.id));
 
         let myAvailability = availabilityMap.get(req.user.id);
 
@@ -94,6 +94,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           schedule: schedule,
           users: users,
           myAvailability: myAvailability,
+          createdBy: schedule.createdBy,
         });
       });
     } else {
