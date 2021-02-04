@@ -92,7 +92,7 @@ passport.use(new GoogleStrategy({
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
-var schedulesRouter = require('./routes/schedules');
+var schedulesRouter = require('./routes/schedules').router;
 var availabilitiesRouter = require('./routes/availabilities');
 
 var app = express();

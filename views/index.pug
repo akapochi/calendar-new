@@ -23,12 +23,10 @@ block content
               a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}
             td #{dayName[day]}
             td
-              //- #{availability}
-              //- each user in users
-              //-   - var availability = availabilityMap.get(user.userId);
-              //-   - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
-              //-   - var buttonStyles = ['btn-primary', 'btn-danger'];
-              //-   button(class=`availability-toggle-button btn-lg ${buttonStyles[availability]}`
-              //-     data-schedule-id=schedule.scheduleId
-              //-     data-user-id=user.userId
-              //-     data-availability=availability).my-3 #{availabilityLabels[availability]}
+              //- #{myAvailability}
+              //- - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+              //- - var buttonStyles = ['btn-primary', 'btn-danger'];
+              //- button(class=`availability-toggle-button btn-lg ${buttonStyles[myAvailability]}`
+              //-   data-schedule-id=schedule.scheduleId
+              //-   data-user-id=userId
+              //-   data-availability=myAvailability).my-3 #{availabilityLabels[myAvailability]}

@@ -9,6 +9,9 @@ const Availability = require('../models/availability');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: true });
 
+let myAvailability;
+const availabilityMap = new Map(); // key: userId, value: availability
+
 router.get('/new', authenticationEnsurer, csrfProtection, (req, res, next) => {
   res.render('new', { user: req.user, csrfToken: req.csrfToken() });
 });
@@ -53,7 +56,6 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
         order: [[User, 'username', 'ASC']]
       }).then((availabilities) => {
         // 出欠 Map(キー:ユーザー ID, 値:出欠) を作成する
-        const availabilityMap = new Map(); // key: userId, value: availability
         availabilities.forEach((a) => {
           availabilityMap.set(a.user.userId, a.availability);
         });
@@ -82,11 +84,7 @@ router.get('/:scheduleId', authenticationEnsurer, (req, res, next) => {
           availabilityMap.set(u.userId, availability);
         });
 
-        // console.log(req.user);
-        // console.log(parseInt(req.user.id));
-        // console.log(BigInt(req.user.id));
-
-        let myAvailability = availabilityMap.get(req.user.id);
+        myAvailability = availabilityMap.get(req.user.id);
 
         res.render('schedule', {
           user: req.user,
@@ -181,4 +179,8 @@ function deleteScheduleAggregate(scheduleId, done, err) {
 
 router.deleteScheduleAggregate = deleteScheduleAggregate;
 
-module.exports = router;
+module.exports = {
+  router,
+  myAvailability,
+  availabilityMap
+};
