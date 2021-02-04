@@ -107,16 +107,20 @@ button.on("click", function () {
   var userId = button.data('user-id');
   var availability = parseInt(button.data('availability'));
   var nextAvailability = (availability + 1) % 2;
-  jquery__WEBPACK_IMPORTED_MODULE_0___default.a.post("/schedules/".concat(scheduleId, "/users/").concat(userId), {
-    availability: nextAvailability
-  }, function (data) {
-    button.data('availability', data.availability);
-    var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
-    button.text(availabilityLabels[data.availability]);
-    var buttonStyles = ['btn-primary', 'btn-danger'];
-    button.removeClass('btn-primary btn-danger');
-    button.addClass(buttonStyles[data.availability]);
-  });
+  var message = ['申し込み', 'キャンセルし'];
+
+  if (confirm("".concat(message[availability], "\u307E\u3059\u304B\uFF1F"))) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default.a.post("/schedules/".concat(scheduleId, "/users/").concat(userId), {
+      availability: nextAvailability
+    }, function (data) {
+      button.data('availability', data.availability);
+      var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+      button.text(availabilityLabels[data.availability]);
+      var buttonStyles = ['btn-primary', 'btn-danger'];
+      button.removeClass('btn-primary btn-danger');
+      button.addClass(buttonStyles[data.availability]);
+    });
+  }
 });
 
 /***/ }),
