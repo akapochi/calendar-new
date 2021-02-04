@@ -7,10 +7,12 @@ const moment = require('moment-timezone');
 
 // let myAvailability = require('./schedules').myAvailability;
 let availabilityMap = require('./schedules').availabilityMap;
+// let myAvailability = availabilityMap.get(req.user.id);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  // let myAvailability = availabilityMap.get(req.user.id);
+
+  console.log(availabilityMap);
 
   const title = 'イベント管理くん';
   if (req.user) {

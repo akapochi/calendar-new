@@ -14,19 +14,19 @@ block content
         tr
           th イベント名
           th 曜日
-          th 申し込み
+          //- th 申し込み
         each schedule in schedules
-          - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日', 'その他'] 
+          - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日','その他'] 
           - var day = schedule.day
           tr
             td
               a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}
             td #{dayName[day]}
-            td
-              //- #{myAvailability}
-              //- - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
-              //- - var buttonStyles = ['btn-primary', 'btn-danger'];
-              //- button(class=`availability-toggle-button btn-lg ${buttonStyles[myAvailability]}`
-              //-   data-schedule-id=schedule.scheduleId
-              //-   data-user-id=userId
-              //-   data-availability=myAvailability).my-3 #{availabilityLabels[myAvailability]}
+            //- td
+            //-   #{myAvailability}
+            //-   - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
+            //-   - var buttonStyles = ['btn-primary', 'btn-danger'];
+            //-   button(class=`availability-toggle-button btn-lg ${buttonStyles[myAvailability]}`
+            //-     data-schedule-id=schedule.scheduleId
+            //-     data-user-id=userId
+            //-     data-availability=myAvailability).my-3 #{availabilityLabels[myAvailability]}
