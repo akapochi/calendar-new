@@ -42,25 +42,32 @@ router.get('/', (req, res, next) => {
           where: { scheduleId: s.scheduleId, userId: req.user.id },
           order: [[User, 'username', 'ASC']]
         }).then((a) => {
-          // myAvailability = a.dataValues.availability;
-          myAvailabilityMap.set(a.dataValues.scheduleId, a.dataValues.availability);
+          myAvailabilityMap.set(a.schedule.scheduleId, a.availability);
+          // console.log(a.dataValues.availability);
+          // console.log(a.dataValues);
+          // console.log(a.scheduleId);
+          // console.log('===============');
+          // console.log(a);
+          // console.log(myAvailabilityMap);
+
+          myAvailability = myAvailabilityMap.get(a.scheduleId);
+
+          // console.log('===============');
           // console.log(myAvailability);
-          console.log(a.dataValues.availability);
-          console.log(a.dataValues);
-          console.log('===============');
-          console.log(a);
-          console.log(myAvailabilityMap);
+
+          res.render('index', {
+            title: title,
+            user: req.user,
+            userId: req.user.id,
+            schedules: schedules,
+            day: Schedule.day,
+            myAvailability: myAvailability,
+            myAvailabilityMap: myAvailabilityMap,
+          });
         });
+
       });
-      res.render('index', {
-        title: title,
-        user: req.user,
-        userId: req.user.id,
-        schedules: schedules,
-        day: Schedule.day,
-        // myAvailability: myAvailability,
-        myAvailabilityMap: myAvailabilityMap,
-      });
+
     });
   } else {
     res.render('index', { title: title, user: req.user });
