@@ -6,7 +6,7 @@ const User = loader.database.define(
   'users',
   {
     userId: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.STRING,
       primaryKey: true,
       allowNull: false
     },

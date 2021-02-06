@@ -19,7 +19,7 @@ const Schedule = loader.database.define(
       allowNull: false
     },
     createdBy: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.STRING,
       allowNull: false
     },
     updatedAt: {
