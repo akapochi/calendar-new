@@ -7,13 +7,13 @@ block content
     div.card-body
       p(style="white-space:pre;") #{schedule.memo}
     div.card-footer
-      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日' ,'その他'] 
+      - var dayName = ['月曜日','火曜日','水曜日','木曜日','金曜日' ,'その他']
       - var day = schedule.day
       p #{dayName[day]}
-  div.form-group
-    label(for="shareURL") 共有用 URL:
-    - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
-    input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
+  //- div.form-group
+  //-   label(for="shareURL") 共有用 URL:
+  //-   - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
+  //-   input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
   - var isMine = createdBy === userId
   if isMine
     div
