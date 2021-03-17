@@ -18,6 +18,7 @@ block content
   if isMine
     div
       a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info このイベントを編集する
+  p #{userId}
 
   - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
   - var buttonStyles = ['btn-primary', 'btn-danger'];
