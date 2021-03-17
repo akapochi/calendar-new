@@ -14,11 +14,10 @@ block content
   //-   label(for="shareURL") 共有用 URL:
   //-   - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
   //-   input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
-  - var isMine = (createdBy === userId || userId == "109000785926202904276")
+  - var isMineOrAdmin = (createdBy === userId || userId == "109000785926202904276")
   if isMine
     div
       a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info このイベントを編集する
-  p #{userId}
 
   - var availabilityLabels = ['このイベントに申し込む', '申し込みを取り消す'];
   - var buttonStyles = ['btn-primary', 'btn-danger'];

@@ -109,7 +109,7 @@ router.get('/:scheduleId/edit', authenticationEnsurer, csrfProtection, (req, res
       scheduleId: req.params.scheduleId
     }
   }).then((schedule) => {
-    if (isMine(req, schedule)) { // 作成者のみが編集フォームを開ける
+    if (isMineOrAdmin(req, schedule)) { // 作成者のみが編集フォームを開ける
       res.render('edit', {
         user: req.user,
         schedule: schedule,
@@ -123,7 +123,7 @@ router.get('/:scheduleId/edit', authenticationEnsurer, csrfProtection, (req, res
   });
 });
 
-function isMine(req, schedule) {
+function isMineOrAdmin(req, schedule) {
   return schedule && schedule.createdBy === req.user.id || req.user.id == "109000785926202904276";
 }
 
@@ -133,7 +133,7 @@ router.post('/:scheduleId', authenticationEnsurer, csrfProtection, (req, res, ne
       scheduleId: req.params.scheduleId
     }
   }).then((schedule) => {
-    if (schedule && isMine(req, schedule)) {
+    if (schedule && isMineOrAdmin(req, schedule)) {
       if (parseInt(req.query.edit) === 1) {
         const updatedAt = new Date();
         schedule.update({
