@@ -124,7 +124,7 @@ router.get('/:scheduleId/edit', authenticationEnsurer, csrfProtection, (req, res
 });
 
 function isMineOrAdmin(req, schedule) {
-  return schedule && schedule.createdBy === req.user.id || req.user.id === "109000785926202904276";
+  return schedule && schedule.createdBy === req.user.id || req.user.id == "109000785926202904276";
 }
 
 router.post('/:scheduleId', authenticationEnsurer, csrfProtection, (req, res, next) => {
