@@ -5,8 +5,10 @@ block content
     h1.display-4 イベント管理くん
     p.lead イベント管理くんは、GitHub と Googleで認証でき、イベントの作成・申し込みができるサービスです。（履修登録のようなものをイメージして作ったので、毎週同じ曜日に行われるイベントが主な対象です）
   if user
-    div
-      a(href="/schedules/new").btn.btn-info イベントを作る
+    - var isAdmin = userId === "109000785926202904276";
+    if isAdmin
+      div
+        a(href="/schedules/new").btn.btn-info イベントを作る
     - var hasSchedule = schedules.length > 0
     if hasSchedule
       h3.my-3 イベント一覧

@@ -81,6 +81,7 @@ router.get('/', (req, res, next) => {
       res.render('index', {
         title: title,
         user: req.user,
+        userId: req.user.id,
         schedules: schedules,
         day: Schedule.day,
         // myAvailability: myAvailability,
