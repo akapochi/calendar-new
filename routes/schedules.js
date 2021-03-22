@@ -25,7 +25,9 @@ router.post('/', authenticationEnsurer, csrfProtection, (req, res, next) => {
     memo: req.body.memo,
     createdBy: req.user.id,
     updatedAt: updatedAt,
-    day: req.body.day
+    day: req.body.day,
+    style: req.body.style,
+    term: req.body.term,
   }).then((schedule) => {
     res.redirect('/schedules/' + schedule.scheduleId);
   });
@@ -142,7 +144,9 @@ router.post('/:scheduleId', authenticationEnsurer, csrfProtection, (req, res, ne
           memo: req.body.memo,
           createdBy: req.user.id,
           updatedAt: updatedAt,
-          day: req.body.day
+          day: req.body.day,
+          style: req.body.style,
+          term: req.body.term,
         }).then((schedule) => {
           res.redirect('/schedules/' + schedule.scheduleId);
         });

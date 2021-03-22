@@ -29,4 +29,23 @@ block content
       div.form-check
         input(type="radio" name="day" value="5")#other.form-check-input
         label(for="other").form-check-label その他
+    div.form-group
+      label(for="style") 授業形態
+      div.form-check
+        input(type="radio" name="style" value="オンデマンド")#onDemand.form-check-input
+        label(for="onDemand").form-check-label オンデマンド
+      div.form-check
+        input(type="radio" name="style" value="リアルタイム")#realtime.form-check-input
+        label(for="realtime").form-check-label リアルタイム
+    div.form-group
+      label(for="style") 期間
+      div.form-check
+        input(type="radio" name="term" value="春学期前半")#firstHalfOfSpring.form-check-input
+        label(for="firstHalfOfSpring").form-check-label 春学期前半
+      div.form-check
+        input(type="radio" name="term" value="春学期後半")#secondHalfOfSpring.form-check-input
+        label(for="secondHalfOfSpring").form-check-label 春学期後半
+      div.form-check
+        input(type="radio" name="term" value="春学期通期")#allOfSpring.form-check-input
+        label(for="allOfSpring").form-check-label 春学期通期
     button(type="submit").btn.btn-info イベントをつくる

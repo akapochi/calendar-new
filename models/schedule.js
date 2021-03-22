@@ -28,7 +28,15 @@ const Schedule = loader.database.define(
     },
     day: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: true
+    },
+    style: {
+      type: Sequelize.TEXT(6), // リアルタイムかオンデマンドか
+      allowNull: true
+    },
+    term: {
+      type: Sequelize.TEXT(5),
+      allowNull: true
     }
   },
   {
