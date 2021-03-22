@@ -14,8 +14,8 @@ block content
   //-   label(for="shareURL") 共有用 URL:
   //-   - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
   //-   input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
-  - var isMineOrAdmin = (createdBy === userId || userId == "109000785926202904276")
-  if isMine
+  - var isMineOrAdmin = (createdBy === userId || userId === "109000785926202904276")
+  if isMineOrAdmin
     div
       a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info このイベントを編集する
 
