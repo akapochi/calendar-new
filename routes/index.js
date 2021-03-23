@@ -76,7 +76,7 @@ router.get('/', (req, res, next) => {
 
   if (req.user) {
     Schedule.findAll({
-      order: [['day', 'ASC']]
+      order: [['term', 'ASC'], ['day', 'ASC']]
     }).then(schedules => {
       res.render('index', {
         title: title,
